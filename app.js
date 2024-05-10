@@ -8,6 +8,10 @@ const router = require('./src/route/aip')
 const app = express();
 const PORT = 3000;
 
+app.get('/', (req, res) => {
+    var html = path.join(__dirname, './src/public/html/index.html');
+    res.sendFile(html);
+});
 app.use('/api', router);
 
 app.listen(PORT, () => {
