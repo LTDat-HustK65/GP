@@ -4,7 +4,7 @@ mongoose.connect('mongodb://localhost/GraduatedProject');
 
 const Schema = mongoose.Schema;
 
-const ObjectSchema = new Schema({
+const objectSchema = new Schema({
     timeApear: Date,
     properties: {
         name: String,
@@ -22,9 +22,9 @@ const ObjectSchema = new Schema({
         deceivedTime: Date
     }
 }, { 
-    collation: 'ObjectDB' 
+    collection: 'ObjectDB' 
 });
 
-const ObjectDB = mongoose.model('ObjectDB', ObjectSchema);
+const ObjectDBModule = mongoose.model('ObjectDB', objectSchema);
 
-module.exports = ObjectDB;
+module.exports = ObjectDBModule;
