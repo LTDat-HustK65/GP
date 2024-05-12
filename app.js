@@ -7,7 +7,9 @@ const router = require('./src/route/aip')
 
 const app = express();
 const PORT = 3000;
+//app.use(bodyParser.urlencoded({ extended: false }))
 
+app.use(bodyParser.json())
 app.use('/public', express.static(path.join(__dirname, './src/public/')))
 
 app.get('/', (req, res) => {

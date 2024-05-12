@@ -1,3 +1,11 @@
+const configObjectDB = require('../config/configDB/ObjectDB');
 
+const cobotFramwork = {
+    DeceiveObject
+};
 
-// module.exports = cobotFramwork;
+function DeceiveObject(params) {
+    console.log('ĐANG GẠT VẬT THỂ ĐÂY, NẶNG QUÁ !!!!!!!!');
+}
+
+module.exports = cobotFramwork;

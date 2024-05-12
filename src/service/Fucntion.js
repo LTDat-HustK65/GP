@@ -2,13 +2,15 @@ const mongoose = require('mongoose');
 
 const configObjectDB = require('../config/configDB/ObjectDB');
 const cobotFramwork = require('../controller/cobotFramwork');
+// const { DataBuffer } = require('babylonjs/Buffers/dataBuffer');
 
 // Khai báo các hàm
 const Function = {
     CreatObject,
     CaculateNewObjectLocation,
     SelcetObject,
-    CheckObjectInDB
+    CheckObjectInDB,
+    SelectActions
 };
 
 // Hàm tạo một object mới
@@ -57,6 +59,20 @@ function CreatObject() {
     console.log('Object: ', objName);
 }
 
+// Hàm xóa một object
+function DeleteObject(timeApear) {
+    configObjectDB.deleteOne({
+        timeApear: timeApear
+    })
+    .then((data) => {
+        console.log(
+            'vat the', data.properties.name, 'xuat hien vao thoi diem',data.timeApear, 'da duoc xu ly !');
+    })
+    .catch((err) => {
+        console.log(err);
+    });
+}
+
 // Hàm tính thời gian mà object có thể di chuyển trong phạm vi nhận diện của robot
 function CaculateNewObjectLocation(speed, timeApear) {
     var timeMoveOfObject = 10 / speed * 1000;// 10 là độ dài quãng đường mà object có thể di chuyển trong phạm vi nhận diện của robot tính bằng miliseconds
@@ -65,8 +81,9 @@ function CaculateNewObjectLocation(speed, timeApear) {
     return deceivedTime;
 }
 
-//
+// Hàm kiểm tra object có trong database không
 function CheckObjectInDB(object) {
+    var existObject;
     if (object == 0) {
         configObjectDB.findOne({
             'properties.name': 'Apple'
@@ -74,9 +91,11 @@ function CheckObjectInDB(object) {
         .then((data) => {
             console.log(data);
             if (data == null) {
-                console.log('Khong co object trong database');  
+                console.log('Khong co object trong database');
+                return existObject = 0;  
             }else{
-                SelcetObject(data.properties.name);
+                // SelcetObject(data.properties.name);
+                return existObject = 1;
             }
         })
         .catch((err) => {
@@ -89,9 +108,11 @@ function CheckObjectInDB(object) {
         .then((data) => {
             console.log(data);
             if (data == null) {
-                console.log('Khong co object trong database');  
+                console.log('Khong co object trong database');
+                return existObject = 0; 
             }else{
-                SelcetObject(data.properties.name);
+            //     SelcetObject(data.properties.name);
+                return existObject = 1;
             }
         })
         .catch((err) => {
@@ -101,16 +122,55 @@ function CheckObjectInDB(object) {
 }
 
 // Hàm chọn một object trong database
-function SelcetObject(object) {
+function SelcetObject(objectName, actionName) {
+    // var allowAction = false;
     configObjectDB.findOne({
-        'properties.name': object
+        'properties.name': objectName
     })
-    .then((data) => {
-        console.log('Thoi diem can gat: ',data.properties.deceivedTime);
+    .then((dataObject) => {
+        console.log('Vat the ',dataObject.properties.name)
+        console.log('xuat hien vao thoi diem: ',dataObject.timeApear);
+        console.log('Thoi diem can gat: ',dataObject.properties.deceivedTime);
+
+        SelectActions(actionName, dataObject);
+        // return allowAction = true;
+        // // var selectAction = SelectActions('Deceive');
+        // // Actions(data);
     })
     .catch((err) => {
         console.log(err);
     });
 }
+
+// Hàm lực chọn Action
+function SelectActions(actionName, dataObject) {
+    switch (actionName) {
+        case 'Deceive':
+            cobotFramwork.DeceiveObject(dataObject);
+            break;
+        case 'OtherActions':
+            cobotFramwork.OtherAtion(dataObject);
+            break;
+        default:
+                    console.log('Khong co hanh dong nao');
+            break;
+    }
+}
+
+//
+// function Actions(selcetAtion, dataForFrameWork1) {
+
+//     switch (selcetAtion) {
+//         case 'Deceive':
+//             cobotFramwork.DeceiveObject(dataForFrameWork1);
+//             break;
+//         case 'OtherActions':
+//             // cobotFramwork.OtherAtion(params);
+//             break;
+//         default:
+//             console.log('Khong co hanh dong nao');
+//             break;
+//     }
+// }
 
 module.exports = Function;

@@ -10,6 +10,7 @@
     <button onclick="callAPISelectOrange()">Chọn cam</button>
     <button onclick="callAPISelectApple()">Chọn táo</button>
     <script src="https://cdn.jsdelivr.net/npm/axios@1.6.7/dist/axios.min.js"></script>
+    
     <script>
        async function callAPI() {
             var time = 0;
@@ -23,11 +24,11 @@
         }
 
         async function callAPISelectOrange() {
-            await axios.post('http://localhost:3000/api/select/:1')
+            await axios.get('http://localhost:3000/api/select/:1')
         }
 
         async function callAPISelectApple() {
-            await axios.post('http://localhost:3000/api/select/:0')
+            await axios.get('http://localhost:3000/api/select/:0')
         }
     </script>
 </body>

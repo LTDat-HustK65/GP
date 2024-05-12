@@ -2,11 +2,11 @@ const mongoose = require('mongoose');
 const configObjectDB = require('../config/configDB/ObjectDB');
 
 const draft = { 
-    FindObject,
+    Draft,
     
  };
 
-function FindObject() {
+function Draft() {
     configObjectDB.findOne({
         'properties.name': 'Apple'
     })
