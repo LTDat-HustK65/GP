@@ -17,19 +17,6 @@ router.post('/create', (req, res) => {
     }
 });
 
-// router.get('/select/', (req, res) => {
-//     var objName = req.body.
-
-//     var check = Function.CheckObjectInDB(objName);
-//     if (check == 0) {
-//         console.log('Khong co object trong database');
-//     }else {
-//         res.send('Find Object');
-//         /*var allowAction = */Function.SelcetObject(objName);
-//     }
-    
-// });
-
 router.post('/action', async (req, res) => {
     try {
         var objectName = req.body.objectName;
@@ -43,6 +30,20 @@ router.post('/action', async (req, res) => {
         res.status(500).json({ error: 'An error occurred while fetching data.' });
     }
 });
+
+// router.get('/select/', (req, res) => {
+//     var objName = req.body.
+
+//     var check = Function.CheckObjectInDB(objName);
+//     if (check == 0) {
+//         console.log('Khong co object trong database');
+//     }else {
+//         res.send('Find Object');
+//         /*var allowAction = */Function.SelcetObject(objName);
+//     }
+    
+// });
+
 
 router.post('/draft',async (req, res) => {
     try {

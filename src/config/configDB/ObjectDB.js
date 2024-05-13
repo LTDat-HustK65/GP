@@ -14,12 +14,12 @@ const objectSchema = new Schema({
             y: Number,
             z:Number
         },
-        deceivedLocation:{
-            x: Number,
-            y: Number,
-            z:Number
-        },
-        deceivedTime: Date
+        // deceivedLocation:{
+        //     x: Number,
+        //     y: Number,
+        //     z:Number
+        // },
+        // deceivedTime: Date
     }
 }, { 
     collection: 'ObjectDB' 

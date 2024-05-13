@@ -7,6 +7,7 @@ const cobotFramwork = require('../controller/cobotFramwork');
 // Khai báo các hàm
 const Function = {
     CreatObject,
+    DeleteObject,
     CaculateNewObjectLocation,
     SelcetObject,
     CheckObjectInDB,
@@ -32,8 +33,8 @@ function CreatObject() {
 
     var objectTimeApear = new Date();
     var objectSpeed = Math.floor(Math.random() * 3) + 1;
-    var objectDeceivedTime = CaculateNewObjectLocation(objectSpeed, objectTimeApear);
-
+    // var objectDeceivedTime = CaculateNewObjectLocation(objectSpeed, objectTimeApear);
+    
     // Tạo một object mới
     configObjectDB.create({
         timeApear: objectTimeApear,
@@ -41,12 +42,12 @@ function CreatObject() {
             name: objName,
             speed: objectSpeed,
             currentLocation: objLocation,
-            deceivedLocation: {
-                x: 10, 
-                y: objLocation.y,
-                z: 0
-            },
-            deceivedTime: objectDeceivedTime
+            // deceivedLocation: {
+            //     x: 10, 
+            //     y: objLocation.y,
+            //     z: 0
+            // }
+            // deceivedTime: objectDeceivedTime
         }        
     })
     .then((data) => {
@@ -130,8 +131,16 @@ function SelcetObject(objectName, actionName) {
     .then((dataObject) => {
         console.log('Vat the ',dataObject.properties.name)
         console.log('xuat hien vao thoi diem: ',dataObject.timeApear);
-        console.log('Thoi diem can gat: ',dataObject.properties.deceivedTime);
-
+        
+        var objectDeceivedTime = CaculateNewObjectLocation(dataObject.properties.speed, dataObject.timeApear);
+        var deceivedLocation = {
+                x: 10, 
+                y: dataObject.properties.currentLocation.y,
+                z: 0
+            } 
+        
+        console.log('Thoi diem can gat: ', objectDeceivedTime);
+        console.log('Vi tri gat: ', deceivedLocation);
         SelectActions(actionName, dataObject);
         // return allowAction = true;
         // // var selectAction = SelectActions('Deceive');
