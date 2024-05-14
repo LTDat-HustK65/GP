@@ -8,7 +8,7 @@ body {
     width: 100%;
   }
   
-  .action-container {
+  .select-container {
     width: 50vw;
     display: flex;
     flex-direction: column;
@@ -16,16 +16,16 @@ body {
     padding-top: 200px;
   }
   
-  .action-container h1 {
+  .select-container h1 {
     font-size: 60px;
     font-weight: bold;
   }
   
-  .action {
+  .select {
     display: flex;
   }
   
-  .action button {
+  .select button {
     width: 200px;
     height: 180px;
     font-size: 32px;
@@ -38,7 +38,7 @@ body {
     margin-right: 70px;
   }
   
-  .action button:hover {
+  .select button:hover {
     background-color: #555454;
   }
   
@@ -60,7 +60,7 @@ body {
     object-fit: cover;
   }
   
-  .windowEdit {
+  .windowAction {
     display: none;
     flex-direction: column;
     width:650px;
@@ -81,7 +81,7 @@ body {
     right: 2px;
   }
   
-  .editBtns {
+  .actionBtns {
     width: 600px;
     height: 80px;
     font-size: 20px;
@@ -93,6 +93,6 @@ body {
     color: #fff;
   }
   
-  .editBtns:hover {
+  .actionBtns:hover {
     background-color: #555454;
   }
