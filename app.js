@@ -16,6 +16,7 @@ app.use(bodyParser.json())
 
 app.use('/node_modules', express.static(path.join(__dirname, 'node_modules')));
 app.use('/src/public', express.static(path.join(__dirname, './src/public')))
+app.use('/js', express.static(path.join(__dirname, './forCustomer/js')));
 
 app.get('/admin', (req, res) => {
     var html = path.join(__dirname, './src/public/html/homepage.html');
