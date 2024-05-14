@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Call API</title>
+    <title>Detect Object</title>
 </head>
 <body>
     <button onclick="callAPI()">Sinh vật thể</button>
-    <button onclick="callAPISelectOrange()">Chọn cam</button>
-    <button onclick="callAPISelectApple()">Chọn táo</button>
+    <!-- <button onclick="callAPISelectOrange()">Chọn cam</button>
+    <button onclick="callAPISelectApple()">Chọn táo</button> -->
     <script src="https://cdn.jsdelivr.net/npm/axios@1.6.7/dist/axios.min.js"></script>
     
     <script>
@@ -24,13 +24,13 @@
             // }     
         }
 
-        async function callAPISelectOrange() {
-            await axios.get('http://localhost:3000/api/select/:1')
-        }
+        // async function callAPISelectOrange() {
+        //     await axios.get('http://localhost:3000/api/select/:1')
+        // }
 
-        async function callAPISelectApple() {
-            await axios.get('http://localhost:3000/api/select/:0')
-        }
+        // async function callAPISelectApple() {
+        //     await axios.get('http://localhost:3000/api/select/:0')
+        // }
     </script>
 </body>
 </html>

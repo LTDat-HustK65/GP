@@ -1,0 +1,102 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    width: 100vw;
+}
+
+.container {
+    display: flex;
+}
+
+.container > * {
+    flex: 1;
+}
+
+.action-container h1 {
+    font-family:'Courier New', Courier, monospace;
+    margin-top: 50px;
+    font-size: 50px;
+}
+
+.select {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    margin-top: 100px;
+}
+
+.select > * {
+    background-color: #878787;
+    color: #fff;
+    border: 0;
+    border-radius: 40px;
+    box-shadow: 0 0 5px #878787;
+    margin: 50px;
+    height: 140px;
+    font-size: 54px;
+    flex: 1;
+}
+
+.select > *:hover {
+    background-color: #9c9c9c;
+}
+
+.img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.windowAction {
+    display: none;
+    flex-direction: column;
+    position: fixed;
+    background-color: rgba(155, 155, 155, 1);
+    width: 750px;
+    height: 480px;
+    padding: 15px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 10px;
+}
+
+.windowAction > div {
+    display: flex;
+}
+
+.actionBtns {
+    margin: 100px 50px;
+    height: 100px;
+    font-size: 34px;
+    border-radius: 15px;
+    border: 0;
+    box-shadow: 0 0 5px #fff;
+    flex: 1;
+}
+
+.actionBtns:hover {
+    background-color: #e5e5e5;
+}
+
+.Xbutton {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 25px;
+    height: 25px;
+    top: 5px;
+    right: 5px;
+    border-radius: 7px;
+    border: 0;
+}
+
+.Xbutton:hover {
+    background-color: #fef1f1;
+}
