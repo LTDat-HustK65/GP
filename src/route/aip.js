@@ -20,11 +20,11 @@ router.post('/create', (req, res) => {
 router.post('/action', async (req, res) => {
     try {
         var objectName = req.body.objectName;
-    var actionName = req.body.actionName;
+        var actionName = req.body.actionName;
     
-    Function.SelcetObject(objectName, actionName);
-    // Function.SelectActions(actionName, dataObject);
-    res.status(200).json({ message: 'Action success' });
+        Function.SelcetObject(objectName, actionName);
+        // Function.SelectActions(actionName, dataObject);
+        res.status(200).json({ message: 'Action success' });
     } catch (error) {
         console.error('Lỗi:', error);
         res.status(500).json({ error: 'An error occurred while fetching data.' });

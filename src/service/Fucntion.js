@@ -8,7 +8,6 @@ const cobotFramwork = require('../controller/cobotFramwork');
 const Function = {
     CreatObject,
     DeleteObject,
-    CaculateNewObjectLocation,
     SelcetObject,
     CheckObjectInDB,
     SelectActions
@@ -74,14 +73,6 @@ function DeleteObject(timeApear) {
     });
 }
 
-// Hàm tính thời gian mà object có thể di chuyển trong phạm vi nhận diện của robot
-function CaculateNewObjectLocation(speed, timeApear) {
-    var timeMoveOfObject = 10 / speed * 1000;// 10 là độ dài quãng đường mà object có thể di chuyển trong phạm vi nhận diện của robot tính bằng miliseconds
-    
-    var deceivedTime = new Date( timeApear.getTime() + timeMoveOfObject);
-    return deceivedTime;
-}
-
 // Hàm kiểm tra object có trong database không
 function CheckObjectInDB(object) {
     var existObject;
@@ -132,7 +123,7 @@ function SelcetObject(objectName, actionName) {
         console.log('Vat the ',dataObject.properties.name)
         console.log('xuat hien vao thoi diem: ',dataObject.timeApear);
         
-        var objectDeceivedTime = CaculateNewObjectLocation(dataObject.properties.speed, dataObject.timeApear);
+        var objectDeceivedTime = cobotFramwork.CaculateNewObjectLocation(dataObject.properties.speed, dataObject.timeApear);
         var deceivedLocation = {
                 x: 10, 
                 y: dataObject.properties.currentLocation.y,
