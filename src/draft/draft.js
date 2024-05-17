@@ -1,21 +1,11 @@
-const mongoose = require('mongoose');
-const configObjectDB = require('../config/configDB/ObjectDB');
+// const Kinematics = require('kinematics');
 
-const draft = { 
-    Draft,
-    
- };
+// const geometry = [
+//     [1,  1,  0], // V0: 1x 1y
+//     [0, 10,  0], // V1: 10y
+//     [5,  0,  0], // V2: 5x
+//     [3,  0,  0], // V3: 3x
+//     [0, -3,  0], // V4: -3y
+//   ]
 
-function Draft() {
-    configObjectDB.findOne({
-        'properties.name': 'Apple'
-    })
-    .then((data) => {
-        console.log(data);
-    })
-    .catch((err) => {
-        console.log(err);
-    });
-}
-
-module.exports = draft;
+//   const RobotKin = new Kinematics(geometry)

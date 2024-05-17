@@ -1,20 +1,58 @@
 $(document).ready(function() {
-    $('#editBtn').click(async function() {
-        $('.windowEdit').css("display", "flex");
-
+    $('#orangeBtn').click(async function() {
+        $('.windowAction').css("display", "flex");
 
         $('.Xbutton').click(function() {
-            $('.windowEdit').css("display", "none");
+            $('.windowAction').css("display", "none");
         });
 
-        $('#editBtn1').click(function() {
+        $('#actionBtn1').click(function() {
+            // console.log('Ok đấy chứ')
+            const data = {
+                objectName:"Orange",
+                actionName:"Deceive"
+            };
+
+            fetch('http://localhost:3000/api/action', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => {
+                return response.json().then(data => {
+                    if (!response.ok) {
+                       showNotification(data.message);
+                       throw new Error('Network response was not ok');
+                    } 
+                    return data;
+                })
+            })
+            .then(data => {console.log(data)})
+            .catch(error => {
+                console.error('Error:', error)
+            });
+
+            // viet fetch
+        });
+    })
+
+    $('#appleBtn').click(async function() {
+        $('.windowAction').css("display", "flex");
+
+        $('.Xbutton').click(function() {
+            $('.windowAction').css("display", "none");
+        });
+
+        $('#actionBtn1').click(function() {
             // console.log('Ok đấy chứ')
             const data = {
                 objectName:"Apple",
                 actionName:"Deceive"
             };
 
-            fetch('http://192.168.1.136:3000/api/action', {
+            fetch('http://localhost:3000/api/action', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

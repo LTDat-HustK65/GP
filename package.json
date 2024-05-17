@@ -11,6 +11,7 @@
     "cors": "^2.8.5",
     "express": "^4.19.2",
     "jquery": "^3.7.1",
+    "kinematics": "^1.0.2",
     "mongoose": "^8.3.4",
     "nodejs": "^0.0.0"
   }
