@@ -12,7 +12,7 @@ $(document).ready(function() {
                 objectName:"Orange",
                 actionName:"Deceive"
             };
-            window.open('http://localhost:3000/src/public/html/draft.html', '_blank');
+            window.open('http://localhost:3000/src/public/robot-gui/index.html', '_blank');
 
             fetch('http://localhost:3000/api/action', {
                 method: 'POST',
@@ -52,7 +52,7 @@ $(document).ready(function() {
                 objectName:"Apple",
                 actionName:"Deceive"
             };
-            window.open('http://localhost:3000/src/public/html/draft.html', '_blank');
+            window.open('http://localhost:3000/src/public/robot-gui/index.html', '_blank');
 
             fetch('http://localhost:3000/api/action', {
                 method: 'POST',
