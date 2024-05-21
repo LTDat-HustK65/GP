@@ -1,30 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Watching Robotic Arm</title>
-    <style>
-        canvas {
-            width: 100%;
-            height: 100%;
-            touch-action: none;
-        }
-        .label {
-            position: absolute;
-            color: white;
-            background-color: rgba(0, 0, 0, 0.5);
-            padding: 5px;
-            border-radius: 5px;
-        }
-    </style>
-</head>
-<body>
-    <canvas id="renderCanvas"></canvas>
-    <script src="https://cdn.babylonjs.com/babylon.js"></script>
-    <script src="https://cdn.babylonjs.com/loaders/babylonjs.loaders.min.js"></script>
-    <script src="https://cdn.babylonjs.com/gui/babylon.gui.js"></script>
-    <script>
-   // thiết lập ban đầu
+// thiết lập ban đầu
 var canvas = document.getElementById("renderCanvas");
 var engine = new BABYLON.Engine(canvas, true);
 var scene = new BABYLON.Scene(engine);
@@ -37,7 +11,7 @@ var light = new BABYLON.HemisphericLight("light", new BABYLON.Vector3(0, 1, 0), 
 new BABYLON.AxesViewer(scene, 100)// x: red, y: green, z: blue
     
 // Import file .stl
-BABYLON.SceneLoader.ImportMesh("", "../models/", "Base.STL", scene, function (newMeshes) {
+BABYLON.SceneLoader.ImportMesh("", "../models/", "Base.STL", scene, function (newMeshes, particleSystems, skeletons) {
     var importedMesh = newMeshes[0];
     importedMesh.setPivotPoint(new BABYLON.Vector3(0, 0, 0));
     importedMesh.parent = Base;
@@ -202,7 +176,7 @@ BABYLON.SceneLoader.ImportMesh("", "../models/", "Claws.STL", scene, function (n
     importedMesh.position.z = -50; 
     importedMesh.rotation.x = 2.85; 
     importedMesh.rotation.y = - Math.PI / 2; 
-    importedMesh.rotation.z = 3.141592653589793; 
+    importedMesh.rotation.z = Math.PI; 
     importedMesh.material = new BABYLON.StandardMaterial("importedMeshMaterial", scene);
     importedMesh.material.diffuseColor = new BABYLON.Color3(0.8, 0.3, 0); // Color verde
 });
@@ -220,72 +194,77 @@ BABYLON.SceneLoader.ImportMesh("", "../models/", "Claws.STL", scene, function (n
     importedMesh.material.diffuseColor = new BABYLON.Color3(0.8, 0.3, 0); // Color azul
 });
 
+
+
 // resize window 
 window.addEventListener("resize", function () {
     engine.resize();
 });
 
         // Tạo các phần tử của cánh tay robot
-        var Base = BABYLON.MeshBuilder.CreateCylinder("Base", { height: 0.2, diameter: 4 }, scene);
-        Base.position.y = 0.1;
+    var Base = BABYLON.MeshBuilder.CreateCylinder("Base", { height: 0.2, diameter: 4 }, scene);
+    Base.position.y = 0.1;
 
-        var BaseUpper = BABYLON.MeshBuilder.CreateBox("BaseUpper", { width: 2, height: 0.2, depth: 1 }, scene);
-        BaseUpper.position.y = 0.1;
-        BaseUpper.parent = Base;
+    var BaseUpper = BABYLON.MeshBuilder.CreateBox("BaseUpper", { width: 2, height: 0.2, depth: 1 }, scene);
+    BaseUpper.position.y = 0.1;
+    BaseUpper.parent = Base;
 
-        var Servo01 = BABYLON.MeshBuilder.CreateDisc("Servo01", { radius: 0.5, tessellation: 50 }, scene);
-        Servo01.position.y = 95;
-        Servo01.position.x = -10;
-        Servo01.position.z = 14;
-        Servo01.parent = BaseUpper;
+    var Servo01 = BABYLON.MeshBuilder.CreateDisc("Servo01", { radius: 0.5, tessellation: 50 }, scene);
+    Servo01.position.y = 95;
+    Servo01.position.x = -10;
+    Servo01.position.z = 14;
+    Servo01.parent = BaseUpper;
 
-        var Biceps = BABYLON.MeshBuilder.CreateBox("Biceps", { width: 1, height: 3, depth: 1 }, scene);
-        Biceps.position.y = 1.5;
-        Biceps.parent = Servo01;
+    var Biceps = BABYLON.MeshBuilder.CreateBox("Biceps", { width: 1, height: 3, depth: 1 }, scene);
+    Biceps.position.y = 1.5;
+    Biceps.parent = Servo01;
 
-        var Servo02 = BABYLON.MeshBuilder.CreateDisc("Servo02", { radius: 0.3, tessellation: 50 }, scene);
-        Servo02.position.y = 120;
-        Servo02.parent = Biceps;
+    var Servo02 = BABYLON.MeshBuilder.CreateDisc("Servo02", { radius: 0.3, tessellation: 50 }, scene);
+    Servo02.position.y = 120;
+    Servo02.parent = Biceps;
 
-        var Arm = BABYLON.MeshBuilder.CreateBox("Arm", { width: 1, height: 3, depth: 1 }, scene);
-        Arm.position.y = 1.5;
-        Arm.parent = Servo02;
+    var Arm = BABYLON.MeshBuilder.CreateBox("Arm", { width: 1, height: 3, depth: 1 }, scene);
+    Arm.position.y = 1.5;
+    Arm.parent = Servo02;
 
-        var Servo03 = BABYLON.MeshBuilder.CreateDisc("Servo03", { radius: 0.3, tessellation: 50 }, scene);
-        Servo03.position.z = 85;
-        Servo03.parent = Arm;
+    var Servo03 = BABYLON.MeshBuilder.CreateDisc("Servo03", { radius: 0.3, tessellation: 50 }, scene);
+    Servo03.position.z = 85;
+    Servo03.parent = Arm;
 
-        var Wrist = BABYLON.MeshBuilder.CreateBox("Wrist", { width: 1, height: 1, depth: 1 }, scene);
-        Wrist.position.y = 0;
-        Wrist.parent = Servo03;
+    var Wrist = BABYLON.MeshBuilder.CreateBox("Wrist", { width: 1, height: 1, depth: 1 }, scene);
+    Wrist.position.y = 0;
+    Wrist.parent = Servo03;
 
-        var Servo04 = BABYLON.MeshBuilder.CreateDisc("Servo04", { radius: 0.3, tessellation: 50 }, scene);
-        Servo04.position.z = 33;
-        Servo04.parent = Hand;
+    var Servo04 = BABYLON.MeshBuilder.CreateDisc("Servo04", { radius: 0.3, tessellation: 50 }, scene);
+    Servo04.position.z = 33;
+    Servo04.parent = Hand;
 
-        var Hand = BABYLON.MeshBuilder.CreateBox("Hand", { width: 1, height: 1, depth: 1 }, scene);
-        Hand.position.z = 33;
-        Hand.parent = Wrist;
+    var Hand = BABYLON.MeshBuilder.CreateBox("Hand", { width: 1, height: 1, depth: 1 }, scene);
+    Hand.position.z = 33;
+    Hand.parent = Wrist;
 
-        var ClawsBase = BABYLON.MeshBuilder.CreateBox("ClawsBase", { width: 1, height: 1, depth: 1}, scene);
-        ClawsBase.position.z = 33;
-        ClawsBase.parent = Hand;
+    var ClawsBase = BABYLON.MeshBuilder.CreateBox("ClawsBase", { width: 1, height: 1, depth: 1}, scene);
+    ClawsBase.position.z = 33;
+    ClawsBase.parent = Hand;
 
-        var GearLeft = BABYLON.MeshBuilder.CreateBox("gearLeft", { width: 1, height: 1, depth: 1 }, scene);
-        GearLeft.position.z = 33;
-        GearLeft.parent = ClawsBase;
+    var GearLeft = BABYLON.MeshBuilder.CreateBox("gearLeft", { width: 1, height: 1, depth: 1 }, scene);
+    GearLeft.position.z = 33;
+    // GearLeft.rotation.z = 1.5707963267948966;
+    GearLeft.parent = ClawsBase;
 
-        var GearRight = BABYLON.MeshBuilder.CreateBox("gearRight", { width: 1, height: 1, depth: 1 }, scene);
-        GearRight.position.z = 33;
-        GearRight.parent = ClawsBase;
+    var GearRight = BABYLON.MeshBuilder.CreateBox("gearRight", { width: 1, height: 1, depth: 1 }, scene);
+    GearRight.position.z = 33;
+    GearRight.parent = ClawsBase;
 
-        var Servo05 = BABYLON.MeshBuilder.CreateDisc("Servo05", { radius: 0.3, tessellation: 50 }, scene);
-        Servo05.position.z = 83;
-        Servo05.parent = ClawsBase;
+    var Servo05 = BABYLON.MeshBuilder.CreateDisc("Servo05", { radius: 0.3, tessellation: 50 }, scene);
+    Servo05.position.z = 83;
+    Servo05.parent = ClawsBase;
 
-        var Claws = BABYLON.MeshBuilder.CreateBox("Claws", { width: 1, height: 1, depth: 1 }, scene);
-        Claws.position.z = 33;
-        Claws.parent = GearLeft;
+    var Claws = BABYLON.MeshBuilder.CreateBox("Claws", { width: 1, height: 1, depth: 1 }, scene);
+    Claws.position.z = 33;
+    Claws.parent = GearLeft;
+
+    
 
 
         // Gán material cho các phần tử
@@ -337,375 +316,85 @@ window.addEventListener("resize", function () {
         });
 
         // Điều khiển cánh tay bằng bàn phím
-        var rotationSpeed = 0.04;
+        var rotationSpeed = 0.16;
+        var cobotState = {
+            BaseUpperState: Number,
+            Servo01State: Number,
+            Servo02State: Number,
+            Servo03State: Number,
+            Servo04State: Number,
+            Servo05State: Number
+        };
         window.addEventListener("keydown", function (event) {
             switch (event.key) {
                 case "a":
-                    BaseUpper.rotation.y -= rotationSpeed; 
+                    cobotState.BaseUpperState = BaseUpper.rotation.y -= rotationSpeed;
+                    console.log(cobotState) 
                     break;
                 case "s":
-                    BaseUpper.rotation.y += rotationSpeed; 
+                    cobotState.BaseUpperState = BaseUpper.rotation.y += rotationSpeed;
+                    console.log(cobotState) 
                     break;
                 case "e":
-                    Servo01.rotation.x -= rotationSpeed;
+                    cobotState.Servo01State = Servo01.rotation.x -= rotationSpeed;
+                    console.log(cobotState)
                     break;
                 case "r":
-                    Servo01.rotation.x += rotationSpeed;                   
+                    cobotState.Servo01State = Servo01.rotation.x += rotationSpeed;
+                    console.log(cobotState)                   
                     break;   
                 case "z":
-                    Servo02.rotation.x -= rotationSpeed;
+                    cobotState.Servo02State = Servo02.rotation.x -= rotationSpeed;
+                    console.log(cobotState)
                     break;
                 case "x":
-                    Servo02.rotation.x += rotationSpeed;
+                    cobotState.Servo02State = Servo02.rotation.x += rotationSpeed;
+                    console.log(cobotState)
                     break;
                 case "f":
-                    Servo03.rotation.z -= rotationSpeed;
+                    cobotState.Servo03State = Servo03.rotation.z -= rotationSpeed;
+                    console.log(cobotState)
                     break;
                 case "g":
-                    Servo03.rotation.z += rotationSpeed;
+                    cobotState.Servo03State = Servo03.rotation.z += rotationSpeed;
+                    console.log(cobotState)
                     break;
                 case "c":
-                    Servo04.rotation.x -= rotationSpeed;
+                    cobotState.Servo04State = Servo04.rotation.x -= rotationSpeed;
                     Hand.rotation.x -= rotationSpeed;
+                    console.log(cobotState)
                     break;
                 case "v":
-                    Servo04.rotation.x += rotationSpeed;
+                    cobotState.Servo04State = Servo04.rotation.x += rotationSpeed;
                     Hand.rotation.x += rotationSpeed;
+                    console.log(cobotState)
                     break;
                 case "q":
-                    Servo05.rotation.z -= rotationSpeed;
+                    cobotState.Servo05State = Servo05.rotation.z -= rotationSpeed;
                     GearLeft.rotation.z -= rotationSpeed;
                     GearRight.rotation.z += rotationSpeed;
+                    console.log(cobotState)
+
                     break;
                 case "w":
-                    Servo05.rotation.z += rotationSpeed;
+                    cobotState.Servo05State = Servo05.rotation.z += rotationSpeed;
                     GearRight.rotation.z -= rotationSpeed;
                     GearLeft.rotation.z += rotationSpeed;
-                    break;                    
+                    console.log(cobotState)
+                    break;
+                case "7":
+                    Object.position.z = Object.position.z += 10;
+                    console.log('toa do tao: ', Object.position.z)
+                    break;     
+                case "9":
+                    Object.position.z = Object.position.z -= 10;
+                    console.log('toa do tao: ', Object.position.z)
+                    break; 
+                    // táo đến x=90 thi cho tay gạt tới 
             }
+
         });
-
-
-var GUI = BABYLON.GUI;
-
-// tạo một khung cho các phần tử UI
-var advancedTexture = GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");
-var UiPanel = new BABYLON.GUI.StackPanel();
-UiPanel.width = "220px";
-UiPanel.fontSize = "14px";
-UiPanel.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_RIGHT;
-UiPanel.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_CENTER;
-advancedTexture.addControl(UiPanel);
-
-var slider = new BABYLON.GUI.Slider();
-slider.minimum = 0.01; // giá trị tốc độ tối thiểu
-slider.maximum = 0.1; // giá trị tốc độ tôi đa
-slider.value = rotationSpeed; // Gía trị ban đầu
-slider.height = "20px";
-slider.width = "200px";
-slider.thumbWidth = "20px";
-slider.color = "green";
-slider.onValueChangedObservable.add(function (value) {
-    // thay đổi thanh trướt sẽ cập nhật giá trị
-    rotationSpeed = value;
-});
-UiPanel.addControl(slider);
-
-// Nút bắt đầu
-var startButton = GUI.Button.CreateSimpleButton("startButton", "Start");
-startButton.paddingTop = "10px";
-startButton.width = "150px";
-startButton.height = "40px";
-startButton.color = "white";
-startButton.background = "green";
-startButton.cornerRadius = 20;
-startButton.onPointerUpObservable.add(function () {
-    startRoutine();
-});
-UiPanel.addControl(startButton);
-
-// nút dừng
-var stopButton = GUI.Button.CreateSimpleButton("stopButton", "Stop");
-stopButton.paddingTop = "10px";
-stopButton.width = "150px";
-stopButton.height = "40px";
-stopButton.color = "white";
-stopButton.background = "red";
-stopButton.cornerRadius = 20;
-stopButton.onPointerUpObservable.add(function () {
-    stopRoutine();
-});
-UiPanel.addControl(stopButton);
-
-// Mảng để lưu trữ các phép quay x, y, z của các servo
-var servoRotations = [];
-
-
-// đếm số lần bấm "Set"
-var setButtonCount = 0;
-
-// tạo nút "Set" để thêm dữ liệu xoay
-var setButton = BABYLON.GUI.Button.CreateSimpleButton("setButton", "Set");
-setButton.width = "150px";
-setButton.height = "40px";
-setButton.color = "white";
-setButton.background = "blue";
-setButton.cornerRadius = 20;
-setButton.onPointerUpObservable.add(function () {
-    // thêm các vòng quay của servo vào mảng "servoRotations = []"
-    servoRotations.push({
-        servo: "BaseUpperState",
-        rotation: {
-            x: BaseUpper.rotation.x,
-            y: BaseUpper.rotation.y,
-            z: BaseUpper.rotation.z
-        }
-    });
-
-    servoRotations.push({
-        servo: "Servo01State",
-        rotation: {
-            x: Servo01.rotation.x,
-            y: Servo01.rotation.y,
-            z: Servo01.rotation.z
-        }
-    });
-
-    servoRotations.push({
-        servo: "Servo02State",
-        rotation: {
-            x: Servo02.rotation.x,
-            y: Servo02.rotation.y,
-            z: Servo02.rotation.z
-        }
-    });
-
-    servoRotations.push({
-        servo: "Servo03State",
-        rotation: {
-            x: Servo03.rotation.x,
-            y: Servo03.rotation.y,
-            z: Servo03.rotation.z
-        }
-    });
-
-    servoRotations.push({
-        servo: "Servo04State",
-        rotation: {
-            x: Servo04.rotation.x,
-            y: Servo04.rotation.y,
-            z: Servo04.rotation.z
-        }
-    });
-
-    servoRotations.push({
-        servo: "Servo05State",
-        rotation: {
-            x: Servo05.rotation.x,
-            y: Servo05.rotation.y,
-            z: Servo05.rotation.z
-        }
-    });
-    console.log(servoRotations);
-    setButtonCount++;
-});
-UiPanel.addControl(setButton);
-
-// Nút "Reset" để Reset dữ liệu mảng
-var resetButton = BABYLON.GUI.Button.CreateSimpleButton("resetButton", "Reset");
-resetButton.width = "150px";
-resetButton.height = "40px";
-resetButton.color = "white";
-resetButton.background = "red";
-resetButton.cornerRadius = 20;
-resetButton.onPointerUpObservable.add(function () {
-    servoRotations = [];
-    console.log(servoRotations);
-
-    // Reset các giá trị xoay
-    BaseUpper.rotation.y = 0;
-    Servo01.rotation.x = 0;
-    Servo02.rotation.x = 0;
-    Servo03.rotation.z = 0;
-    Servo04.rotation.x = 0;
-    Hand.rotation.x = 0;
-    Servo05.rotation.z = 0;
-    GearLeft.rotation.z = 0;
-    GearRight.rotation.z = 0;
-});
-UiPanel.addControl(resetButton);
-
-// Nút "Play" để thực hiện quy trình dựa trên các giá trị được lưu trữ
-var playButton = BABYLON.GUI.Button.CreateSimpleButton("playButton", "Play");
-playButton.width = "150px";
-playButton.height = "40px";
-playButton.color = "white";
-playButton.cornerRadius = 20;
-playButton.background = "green";
-
-playButton.onPointerUpObservable.add(function () {
-    // kiểm tra mảng xoay có dữ liệu hay không
-    if (servoRotations.length > 0) {
-        executePlay();
-    }
-});
-UiPanel.addControl(playButton);
-
-// Nút "Complete set" để đưa cánh tay về vị trí ban đầu 
-var completeSetButton = BABYLON.GUI.Button.CreateSimpleButton("completeSetButton", "Complete set");
-completeSetButton.width = "150px";
-completeSetButton.height = "40px";
-completeSetButton.color = "white";
-completeSetButton.cornerRadius = 20;
-completeSetButton.background = "blue";
-
-completeSetButton.onPointerUpObservable.add(function () {
-    // Reset các giá trị xoay
-    BaseUpper.rotation.y = 0;
-    Servo01.rotation.x = 0;
-    Servo02.rotation.x = 0;
-    Servo03.rotation.z = 0;
-    Servo04.rotation.x = 0;
-    Hand.rotation.x = 0;
-    Servo05.rotation.z = 0;
-    GearLeft.rotation.z = 0;
-    GearRight.rotation.z = 0;
-});
-UiPanel.addControl(completeSetButton);
-
-function executePlay(){
-var index = 0;
-    var interval = setInterval(function () {
-        if (index >= servoRotations.length) {
-            clearInterval(interval);
-            return;
-        }
-
-        var servoData = servoRotations[index];
-        var servoName = servoData.servo;
-        var rotation = servoData.rotation;
-
-        // Tìm servo theo tên
-        var servo = scene.getMeshByName(servoName);
-
-        if (servo) {
-            servo.rotation.x = rotation.x;
-            servo.rotation.y = rotation.y;
-            servo.rotation.z = rotation.z;
-        }
-
-        index++;
-    }, 500 // Tốc độ phát lại (ms)
-    );
-}
-
-//kiểm soát quá trình "Play"
-var isPlayRunning = false;
-
-//nếu ko "Play" thì play
-function startRoutine() {
-    if (!isPlayRunning) {
-        isPlayRunning = true;
-        performPlay();
-    }
-}
-// hàm dừng play
-function stopRoutine() {
-    isPlayRunning = false;
-}
-
-i=0;
-// Hàm thực thi "Play"
-function performPlay() {
-
-    if (isPlayRunning) {
-
-        // 
-        rotateBaseUpper(1); // chỉ xoay theo trục y (dọc)
-
-        if(i<30){
-            rotateServo(Servo01, 0);
-        }
-        if(i<20){
-            rotateServo(Servo02, 1);
-        }
-
-        if(i<40){
-            rotateServo(Servo03, 1);
-        }
-
-        if(i<40){
-            rotateServo(Servo04, 0);
-        }
-
-        if(i>30 && i<60){
-            rotateServo(Servo01, 1);
-        }
-        if(i>50 && i<70){
-            rotateServo(Servo02, 0);
-        }
-        if(i>20 && i<55){
-            rotateServo(Servo03, 0);
-        }
-        if(i>40 && i<80){
-            rotateServo(Servo04, 1);
-        }
-
-        if(i>90){
-            i=0;
-        }
-
-        i++;
-
-        // khoảng cách giữa các động tác (ms)
-        setTimeout(performPlay, 100); 
-   
-    }
     
-}
-
-// Hàm xoay Base
-function rotateBaseUpper(vector) {
-    if(vector==1){ 
-        BaseUpper.rotation.y += rotationSpeed; 
-    } else {
-        BaseUpper.rotation.y -= rotationSpeed; 
-    }
-}
-
-
-// Hàm xoay các Servo
-function rotateServo(servo, vector) {
-
-    if(servo!=Servo03){
-        if(vector==1){ 
-            servo.rotation.x += rotationSpeed; 
-            if(servo===Servo04){
-                Hand.rotation.x += rotationSpeed; 
-            }
-        } else {
-            servo.rotation.x -= rotationSpeed; 
-            if(servo===Servo04){
-                Hand.rotation.x -= rotationSpeed; 
-            }
-        }
-    } else {
-        if(vector==1){ 
-            servo.rotation.z += rotationSpeed; 
-
-        } else {
-            servo.rotation.z -= rotationSpeed; 
-
-        }
-    }
-
-}
-       
-// xử lý thay đổi kích thước cửa sổ
-window.addEventListener("resize", function () {
-    engine.resize();
-});
-     
-    </script>
-</body>
-</html>
+        window.addEventListener("resize", function () {
+            engine.resize();
+        });

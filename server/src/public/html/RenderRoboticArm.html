@@ -429,12 +429,12 @@ window.addEventListener("resize", function () {
                     console.log(cobotState)
                     break;
                 case "7":
-                    Apple.position.z = Apple.position.z += 10;
-                    console.log('toa do tao: ', Apple.position.z)
+                    Object.position.z = Object.position.z += 10;
+                    console.log('toa do tao: ', Object.position.z)
                     break;     
                 case "9":
-                    Apple.position.z = Apple.position.z -= 10;
-                    console.log('toa do tao: ', Apple.position.z)
+                    Object.position.z = Object.position.z -= 10;
+                    console.log('toa do tao: ', Object.position.z)
                     break; 
                     // táo đến x=90 thi cho tay gạt tới 
             }
@@ -465,37 +465,53 @@ var intervalObject;
 var intervalCobot;
 
 createButton.onPointerUpObservable.add(function () {
-    SinhQuaTao();
+    CreatObject();
 });
 UiPanel.addControl(createButton);
 
 // Hàm di chuyển đối tựng 
-function SinhQuaTao(){
+function CreatObject(){
     var timeAppear = new Date();
     // tốc độ di chuyển của quả táo là hằng số bằng 15
 
+    var random = Math.floor(Math.random() * 2);
+    if (random == 0) {
+        BABYLON.SceneLoader.ImportMesh("Apple", "../models/", "Apple.stl", scene, function(newMeshes) {
+        var importedMesh = newMeshes[0];
+        importedMesh.parent = Object;
+        importedMesh.scaling = new BABYLON.Vector3(30, 30, 30);
+        importedMesh.setPivotPoint(new BABYLON.Vector3(0, 0, 0));
+        importedMesh.position.x = -140;
+        importedMesh.position.y = 130;
+        importedMesh.position.z = 190;
+        importedMesh.material = new BABYLON.StandardMaterial("importedMeshMaterial", scene);
+        importedMesh.material.diffuseColor = new BABYLON.Color3(1, 0, 0);
+        })
+    } else {
+        BABYLON.SceneLoader.ImportMesh("Orange", "../models/", "Orange.stl", scene, function(newMeshes) {
+        var importedMesh = newMeshes[0];
+        importedMesh.parent = Object;
+        importedMesh.scaling = new BABYLON.Vector3(30, 30, 30);
+        importedMesh.setPivotPoint(new BABYLON.Vector3(0, 0, 0));
+        importedMesh.position.x = -140;
+        importedMesh.position.y = 130;
+        importedMesh.position.z = 190;
+        importedMesh.material = new BABYLON.StandardMaterial("importedMeshMaterial", scene);
+        importedMesh.material.diffuseColor = new BABYLON.Color3(1, 0.5, 0);
+        })
+    }
     // Import file .stl sinh quả táo
-    BABYLON.SceneLoader.ImportMesh("Apple", "../models/", "Apple.stl", scene, function(newMeshes) {
-    var importedMesh = newMeshes[0];
-    importedMesh.parent = Apple;
-    importedMesh.scaling = new BABYLON.Vector3(30, 30, 30);
-    importedMesh.setPivotPoint(new BABYLON.Vector3(0, 0, 0));
-    importedMesh.position.x = -140;
-    importedMesh.position.y = 130;
-    importedMesh.position.z = 190;
-    importedMesh.material = new BABYLON.StandardMaterial("importedMeshMaterial", scene);
-    importedMesh.material.diffuseColor = new BABYLON.Color3(1, 0, 0);
-})
-    var Apple = BABYLON.MeshBuilder.CreateSphere("Apple", { diameter: 1 }, scene);
-    Apple.position.x = -140;
+    
+    var Object = BABYLON.MeshBuilder.CreateSphere("Object", { diameter: 1 }, scene);
+    Object.position.x = -140;
 
     // Tính thời gian đến điển bị gạt của vật thể
     // var dropTime = CaculateDropTime(timeAppear);
 
     // Gọi hàm di chuyển vật thể mỗi 50ms
-    intervalObject = setInterval(MovingObject(Apple, timeAppear),50);
+    intervalObject = setInterval(MovingObject(Object, timeAppear),50);
     // intervalObject = setInterval(MovingCobot(timeAppear),50);
-    // if (Apple.position.x >= 130) {
+    // if (Object.position.x >= 130) {
     //     console.log('ủa gạt chưa vậy');
     //     intervalCobot = setInterval(MovingCobot(timeAppear), 50);   
     // }

@@ -1,12 +1,15 @@
 const mongoose = require('mongoose');
 
+// Khai báo các model
 const configObjectDB = require('../config/configDB/ObjectDB');
 const cobotFramwork = require('../controller/cobotFramwork');
+const CreateObjectBABYLON = require('../public/js/Object');
+// import { CreatObject } from '../public/js/Object';
 // const { DataBuffer } = require('babylonjs/Buffers/dataBuffer');
 
 // Khai báo các hàm
 const Function = {
-    CreatObject,
+    SaveObjectIntoDB,
     DeleteObject,
     SelcetObject,
     CheckObjectInDB,
@@ -14,39 +17,64 @@ const Function = {
 };
 
 // Hàm tạo một object mới
-function CreatObject() {
+// function CreatObject() {
 
-    // Tạo một object ngẫu nhiên giữa Orange và Apple
-    var randomObject = Math.floor(Math.random() * 2);
-    var objName;
-    if (randomObject == 0) {
-        objName = "Apple";
-    }else {
-        objName = "Orange";
-    }
-    var objLocation = {
-        x: 0, 
-        y: Math.floor(Math.random() * 10),
-        z: 0
-    };
+//     // Tạo một object ngẫu nhiên giữa Orange và Apple
+//     var randomObject = Math.floor(Math.random() * 2);
+//     var objName;
+//     if (randomObject == 0) {
+//         objName = "Apple";
+//     }else {
+//         objName = "Orange";
+//     }
+//     var objLocation = {
+//         x: 0, 
+//         y: Math.floor(Math.random() * 10),
+//         z: 0
+//     };
 
-    var objectTimeApear = new Date();
-    var objectSpeed = Math.floor(Math.random() * 3) + 1;
-    // var objectDeceivedTime = CaculateNewObjectLocation(objectSpeed, objectTimeApear);
+//     var objectTimeApear = new Date();
+//     var objectSpeed = Math.floor(Math.random() * 3) + 1;
+//     // var objectDeceivedTime = CaculateNewObjectLocation(objectSpeed, objectTimeApear);
     
-    // Tạo một object mới
+//     // Tạo một object mới
+//     configObjectDB.create({
+//         timeApear: objectTimeApear,
+//         properties: {
+//             name: objName,
+//             speed: objectSpeed,
+//             currentLocation: objLocation,
+//             // deceivedLocation: {
+//             //     x: 10, 
+//             //     y: objLocation.y,
+//             //     z: 0
+//             // }
+//             // deceivedTime: objectDeceivedTime
+//         }        
+//     })
+//     .then((data) => {
+//         console.log(data);
+//     })
+//     .catch((err) => {
+//         console.log(err);
+//     });
+
+//     console.log('Object: ', objName);
+// }
+
+// Hàm lưu object vào database
+function SaveObjectIntoDB(object) {
+    
     configObjectDB.create({
-        timeApear: objectTimeApear,
+        timeApear: object.timeAppear,
         properties: {
-            name: objName,
-            speed: objectSpeed,
-            currentLocation: objLocation,
-            // deceivedLocation: {
-            //     x: 10, 
-            //     y: objLocation.y,
-            //     z: 0
-            // }
-            // deceivedTime: objectDeceivedTime
+            name: object.nameObject,
+            speed: 15,
+            currentLocation: {
+                x: -140,
+                y: 0,
+                z: 0
+            }
         }        
     })
     .then((data) => {
@@ -55,8 +83,6 @@ function CreatObject() {
     .catch((err) => {
         console.log(err);
     });
-
-    console.log('Object: ', objName);
 }
 
 // Hàm xóa một object
@@ -123,15 +149,11 @@ function SelcetObject(objectName, actionName) {
         console.log('Vat the ',dataObject.properties.name)
         console.log('xuat hien vao thoi diem: ',dataObject.timeApear);
         
-        var objectDeceivedTime = cobotFramwork.CaculateNewObjectLocation(dataObject.properties.speed, dataObject.timeApear);
-        var deceivedLocation = {
-                x: 10, 
-                y: dataObject.properties.currentLocation.y,
-                z: 0
-            } 
+        var objectDeceivedTime = CreateObjectBABYLON.CaculateDropTime(dataObject.timeApear);
+        
         
         console.log('Thoi diem can gat: ', objectDeceivedTime);
-        console.log('Vi tri gat: ', deceivedLocation);
+        
         SelectActions(actionName, dataObject);
         // return allowAction = true;
         // // var selectAction = SelectActions('Deceive');

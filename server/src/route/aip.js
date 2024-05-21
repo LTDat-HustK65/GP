@@ -3,13 +3,17 @@ const bodyParser = require('body-parser');
 
 const configObjectDB = require('../config/configDB/ObjectDB.js');
 const Function = require('../service/Fucntion.js');
-const draftFucntion = require('../draft/draft.js');
+// const draftFucntion = require('../draft/draft.js');
+// import { CreatObject } from '../public/js/Object.js';
+const CreateObjectBABYLON = require('../public/js/Object.js')
+
 
 const router = express.Router();
 
 router.post('/create', (req, res) => {
     try {
-        Function.CreatObject();
+        var object = CreateObjectBABYLON.CreatObject();
+        Function.SaveObjectIntoDB(object);
         res.send('Create Object');
     } catch (error) {
         console.error('Lỗi:', error);
