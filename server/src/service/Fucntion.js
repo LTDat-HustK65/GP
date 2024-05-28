@@ -1,80 +1,48 @@
-const mongoose = require('mongoose');
-
 // Khai báo các model
 const configObjectDB = require('../config/configDB/ObjectDB');
-const cobotFramwork = require('../controller/cobotFramwork');
-const CreateObjectBABYLON = require('../public/js/Object');
+const configProcessedObjectDB = require('../config/configDB/processedObjectDB');
+const cobotFramwork = require('./cobotFramwork');
+
+// const CreateObjectBABYLON = require('../public/js/Object');
 // import { CreatObject } from '../public/js/Object';
 // const { DataBuffer } = require('babylonjs/Buffers/dataBuffer');
 
 // Khai báo các hàm
 const Function = {
-    SaveObjectIntoDB,
+    CreatObject,
     DeleteObject,
-    SelcetObject,
+    SelectObject,
+    AddObject,
     CheckObjectInDB,
     SelectActions
 };
 
 // Hàm tạo một object mới
-// function CreatObject() {
+function CreatObject() {
 
-//     // Tạo một object ngẫu nhiên giữa Orange và Apple
-//     var randomObject = Math.floor(Math.random() * 2);
-//     var objName;
-//     if (randomObject == 0) {
-//         objName = "Apple";
-//     }else {
-//         objName = "Orange";
-//     }
-//     var objLocation = {
-//         x: 0, 
-//         y: Math.floor(Math.random() * 10),
-//         z: 0
-//     };
+    var objectTimeApear = new Date();
 
-//     var objectTimeApear = new Date();
-//     var objectSpeed = Math.floor(Math.random() * 3) + 1;
-//     // var objectDeceivedTime = CaculateNewObjectLocation(objectSpeed, objectTimeApear);
-    
-//     // Tạo một object mới
-//     configObjectDB.create({
-//         timeApear: objectTimeApear,
-//         properties: {
-//             name: objName,
-//             speed: objectSpeed,
-//             currentLocation: objLocation,
-//             // deceivedLocation: {
-//             //     x: 10, 
-//             //     y: objLocation.y,
-//             //     z: 0
-//             // }
-//             // deceivedTime: objectDeceivedTime
-//         }        
-//     })
-//     .then((data) => {
-//         console.log(data);
-//     })
-//     .catch((err) => {
-//         console.log(err);
-//     });
+    // Tạo một object ngẫu nhiên giữa Orange và Apple
+    var randomObject = Math.floor(Math.random() * 2);
+    var objName;
+    if (randomObject == 0) {
+        objName = "Apple";
+    }else {
+        objName = "Orange";
+    }
 
-//     console.log('Object: ', objName);
-// }
-
-// Hàm lưu object vào database
-function SaveObjectIntoDB(object) {
-    
+    // Tạo một object mới
     configObjectDB.create({
-        timeApear: object.timeAppear,
+        timeApear: objectTimeApear,
         properties: {
-            name: object.nameObject,
+            name: objName,
             speed: 15,
             currentLocation: {
                 x: -140,
-                y: 0,
-                z: 0
-            }
+                y: 130,
+                z: 190
+            },
+            // deceivedTime: processedObjectTime
         }        
     })
     .then((data) => {
@@ -83,12 +51,14 @@ function SaveObjectIntoDB(object) {
     .catch((err) => {
         console.log(err);
     });
+
+    console.log('Object: ', objName);
 }
 
 // Hàm xóa một object
-function DeleteObject(timeApear) {
+function DeleteObject(object) {
     configObjectDB.deleteOne({
-        timeApear: timeApear
+        'properties.name': object
     })
     .then((data) => {
         console.log(
@@ -99,9 +69,37 @@ function DeleteObject(timeApear) {
     });
 }
 
+// Hàm thêm một object 
+function AddObject(object) {
+    configProcessedObjectDB.create({
+        timeApear: object.timeApear,
+        properties: {
+            name: object.properties.name,
+            speed: object.properties.speed,
+            currentLocation: {
+                x: object.properties.currentLocation.x,
+                y: object.properties.currentLocation.y,
+                z: object.properties.currentLocation.z
+            },
+            processedLocation: {
+                x: object.properties.currentLocation.x,
+                y: object.properties.currentLocation.y,
+                z: object.properties.currentLocation.z
+            },
+            processedTime: object.properties.timeApear
+        }
+    })
+    .then((data) => {
+        console.log(data);
+    })
+    .catch((err) => {
+        console.log(err);
+    }
+)}
+
 // Hàm kiểm tra object có trong database không
 function CheckObjectInDB(object) {
-    var existObject;
+    
     if (object == 0) {
         configObjectDB.findOne({
             'properties.name': 'Apple'
@@ -140,7 +138,7 @@ function CheckObjectInDB(object) {
 }
 
 // Hàm chọn một object trong database
-function SelcetObject(objectName, actionName) {
+function SelectObject(objectName, actionName) {
     // var allowAction = false;
     configObjectDB.findOne({
         'properties.name': objectName
@@ -149,10 +147,9 @@ function SelcetObject(objectName, actionName) {
         console.log('Vat the ',dataObject.properties.name)
         console.log('xuat hien vao thoi diem: ',dataObject.timeApear);
         
-        var objectDeceivedTime = CreateObjectBABYLON.CaculateDropTime(dataObject.timeApear);
+        var processedObjectTime = cobotFramwork.CaculateDropTime(dataObject.timeApear);
         
-        
-        console.log('Thoi diem can gat: ', objectDeceivedTime);
+        console.log('Thời điểm cần xử lý: ', processedObjectTime);
         
         SelectActions(actionName, dataObject);
         // return allowAction = true;

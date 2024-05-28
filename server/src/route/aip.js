@@ -5,16 +5,15 @@ const configObjectDB = require('../config/configDB/ObjectDB.js');
 const Function = require('../service/Fucntion.js');
 // const draftFucntion = require('../draft/draft.js');
 // import { CreatObject } from '../public/js/Object.js';
-const CreateObjectBABYLON = require('../public/js/Object.js')
+// const CreateObjectBABYLON = require('../public/js/Object.js')
 
 
 const router = express.Router();
 
 router.post('/create', (req, res) => {
     try {
-        var object = CreateObjectBABYLON.CreatObject();
-        Function.SaveObjectIntoDB(object);
-        res.send('Create Object');
+        Function.CreatObject();
+        res.status(200).send('Create Object');
     } catch (error) {
         console.error('Lỗi:', error);
         res.status(500).json({ error: 'An error occurred while fetching data.' });
@@ -25,9 +24,9 @@ router.post('/action', async (req, res) => {
     try {
         var objectName = req.body.objectName;
         var actionName = req.body.actionName;
-    
-        Function.SelcetObject(objectName, actionName);
-        // Function.SelectActions(actionName, dataObject);
+
+        Function.SelectObject(objectName, actionName);
+        
         res.status(200).json({ message: 'Action success' });
     } catch (error) {
         console.error('Lỗi:', error);

@@ -7,6 +7,7 @@
 </head>
 <body>
     <button onclick="callAPI()">Sinh vật thể</button>
+    <button onclick="CallDraftAPI()">Draft Button</button>
     <!-- <button onclick="callAPISelectOrange()">Chọn cam</button>
     <button onclick="callAPISelectApple()">Chọn táo</button> -->
     <script src="https://cdn.jsdelivr.net/npm/axios@1.6.7/dist/axios.min.js"></script>
@@ -24,6 +25,9 @@
             // }     
         }
 
+        async function CallDraftAPI(){
+            const data = await axios.post('http://localhost:3000/api/draft')
+        }
         // async function callAPISelectOrange() {
         //     await axios.get('http://localhost:3000/api/select/:1')
         // }

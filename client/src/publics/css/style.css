@@ -1,98 +1,98 @@
 body {
-    font-family: 'Courier New', Courier, monospace;
-  }
-  
-  
-  .container {
-    display: flex;
-    width: 100%;
-  }
-  
-  .select-container {
-    width: 50vw;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding-top: 200px;
-  }
-  
-  .select-container h1 {
-    font-size: 60px;
-    font-weight: bold;
-  }
-  
-  .select {
-    display: flex;
-  }
-  
-  .select button {
-    width: 200px;
-    height: 180px;
-    font-size: 32px;
-    border: 0;
-    border-radius: 25px;
-    background-color: #3F3F3F;
-    color: #fff;
-    margin-top: 150px;
-    margin-left: 70px;
-    margin-right: 70px;
-  }
-  
-  .select button:hover {
-    background-color: #555454;
-  }
-  
-  .img {
-    top: 0;
-    right: 0;
-    height: 100vh;
-    width: 50vw;
-    position: fixed;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .img img {
-    height: 100%;
-    width: 100%;
-    object-fit: cover;
-  }
-  
-  .windowAction {
-    display: none;
-    flex-direction: column;
-    width:650px;
-    position: fixed;
-    background-color: #b3abab;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    border-radius: 5px;
-    box-shadow: 0px 0px 5px #b3abab;
-    padding-top: 5px;
-    padding-bottom: 20px;
-  }
-  
-  .Xbutton {
-    position: fixed;
-    top: 2px;
-    right: 2px;
-  }
-  
-  .actionBtns {
-    width: 600px;
-    height: 80px;
-    font-size: 20px;
-    margin-top: 15px;
-    margin-left: 20px;
-    border: 0;
-    border-radius: 30px;
-    background-color: #3F3F3F;
-    color: #fff;
-  }
-  
-  .actionBtns:hover {
-    background-color: #555454;
-  }
+  font-family: 'Courier New', Courier, monospace;
+}
+
+
+.container {
+  display: flex;
+  width: 100%;
+}
+
+.select-container {
+  width: 50vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 200px;
+}
+
+.select-container h1 {
+  font-size: 60px;
+  font-weight: bold;
+}
+
+.select {
+  display: flex;
+}
+
+.select button {
+  width: 200px;
+  height: 180px;
+  font-size: 32px;
+  border: 0;
+  border-radius: 25px;
+  background-color: #3F3F3F;
+  color: #fff;
+  margin-top: 150px;
+  margin-left: 70px;
+  margin-right: 70px;
+}
+
+.select button:hover {
+  background-color: #555454;
+}
+
+.img {
+  top: 0;
+  right: 0;
+  height: 100vh;
+  width: 50vw;
+  position: fixed;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.img img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+.windowAction {
+  display: none;
+  flex-direction: column;
+  width:650px;
+  position: fixed;
+  background-color: #b3abab;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 5px;
+  box-shadow: 0px 0px 5px #b3abab;
+  padding-top: 5px;
+  padding-bottom: 20px;
+}
+
+.Xbutton {
+  position: fixed;
+  top: 2px;
+  right: 2px;
+}
+
+.actionBtns {
+  width: 600px;
+  height: 80px;
+  font-size: 20px;
+  margin-top: 15px;
+  margin-left: 20px;
+  border: 0;
+  border-radius: 30px;
+  background-color: #3F3F3F;
+  color: #fff;
+}
+
+.actionBtns:hover {
+  background-color: #555454;
+}
